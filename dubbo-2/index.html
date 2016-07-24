@@ -19,7 +19,7 @@
 <meta property="og:url" content="http://qinghua.github.io/dubbo-2/index.html">
 <meta property="og:site_name" content="懒程序员改变世界">
 <meta property="og:description" content="Dubbo是阿里多年前开源的一套服务治理框架，在众多互联网企业里应用广泛。当当在dubbo的基础上开发了dubbox（Dubbo eXtensions），支持REST风格远程调用。本文在服务治理框架dubbo上手指南的基础上使用dubbox提供的REST服务。">
-<meta property="og:updated_time" content="2016-06-20T09:49:27.000Z">
+<meta property="og:updated_time" content="2016-07-09T08:26:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用dubbox为dubbo提供REST服务">
 <meta name="twitter:description" content="Dubbo是阿里多年前开源的一套服务治理框架，在众多互联网企业里应用广泛。当当在dubbo的基础上开发了dubbox（Dubbo eXtensions），支持REST风格远程调用。本文在服务治理框架dubbo上手指南的基础上使用dubbox提供的REST服务。">
@@ -107,13 +107,6 @@
 </header>
 	<div class="article-content">
 		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			
-		
-		</div>
-		
 		<p><a href="https://github.com/alibaba/dubbo" target="_blank" rel="external">Dubbo</a>是阿里多年前开源的一套服务治理框架，在众多互联网企业里应用广泛。当当在dubbo的基础上开发了<a href="https://github.com/dangdangdotcom/dubbox" target="_blank" rel="external">dubbox</a>（Dubbo eXtensions），<a href="http://dangdangdotcom.github.io/dubbox/rest.html" target="_blank" rel="external">支持REST风格远程调用</a>。本文在<a href="/dubbo-1">服务治理框架dubbo上手指南</a>的基础上使用dubbox提供的REST服务。<br><a id="more"></a></p>
 <p>首先参考<a href="/dubbo-1">服务治理框架dubbo上手指南</a>，实现自己的dubbo服务。在此基础上，让我们来看看<a href="http://dangdangdotcom.github.io/dubbox/rest.html" target="_blank" rel="external">在Dubbo中开发REST风格的远程调用</a>。REST的优势就不多说了，本文关注的是快速搭建环境。</p>
 <p>光看dubbox的官方文档稍微有一点儿坑，因为它对于maven依赖的描述基本没有。Dubbo本身的维护已经不太活跃了，最新的版本是<code>2.5.4-SNAPSHOT</code>。当当接下了维护的重任，目前的最新版是<code>dubbox-2.8.4</code>，其实groupId和artifactId还是原来的不变，只是版本号有变化罢了。所以首先让我们来升级一下依赖，在<code>helloImpl</code>的<code>pom.xml</code>里升级dubbo：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>dubbo<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.8.4<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-expression<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">exclusion</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-beans<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">exclusion</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-aop<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
@@ -186,13 +179,6 @@
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- 
- 
-  </div>
-
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
@@ -222,6 +208,8 @@
 			<li><a href="/categories/devops/" title="devops">devops<sup>33</sup></a></li>
 		  
 		
+		  
+			<li><a href="/categories/idea/" title="idea">idea<sup>1</sup></a></li>
 		  
 		
 		  
@@ -270,19 +258,19 @@
 			
 		
 			
+				<li><a href="/tags/thought/" title="thought">thought<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/agile/" title="agile">agile<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/marathon/" title="marathon">marathon<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/cloudify/" title="cloudify">cloudify<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/openstack-swift/" title="openstack swift">openstack swift<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/agile/" title="agile">agile<sup>2</sup></a></li>
 			
 		
 			
@@ -298,7 +286,15 @@
 			
 		
 			
+				<li><a href="/tags/openstack-swift/" title="openstack swift">openstack swift<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/radosgw/" title="radosgw">radosgw<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tosca/" title="tosca">tosca<sup>1</sup></a></li>
 			
 		
 			
@@ -315,14 +311,6 @@
 		
 			
 				<li><a href="/tags/OCR/" title="OCR">OCR<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/tesseract/" title="tesseract">tesseract<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/chronos/" title="chronos">chronos<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -440,8 +428,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
