@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title><![CDATA[使用IntelliJ IDEA社区版动态加载webapp]]></title>
+      <url>http://qinghua.github.io/intellij-idea-community-hotswap-webapp/</url>
+      <content type="html"><![CDATA[<p><a href="https://dzone.com/articles/why-idea-better-eclipse" target="_blank" rel="external">IntelliJ IDEA在重构方面碾压eclipse</a>。但是IDEA的免费社区版<a href="https://www.jetbrains.com/idea/features/editions_comparison_matrix.html" target="_blank" rel="external">并不支持web应用开发</a>。好在Maven有一个<code>maven-jetty-plugin</code>插件。如果你正在用IDEA社区版开发一个web应用，可以使用它来动态加载并调试IDE里的web应用。笔者目前使用的IDEA版本为2016.1.1。<br><a id="more"></a></p>
+<h2 id="u51C6_u5907_u73AF_u5883"><a href="#u51C6_u5907_u73AF_u5883" class="headerlink" title="准备环境"></a>准备环境</h2><p>假设我们有一个maven的web项目，已经用IDEA打开了。那么就可以在pom.xml里加上<code>maven-jetty-plugin</code>的插件：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;project ...&gt;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	&lt;build&gt;</span><br><span class="line">		...</span><br><span class="line"></span><br><span class="line">		&lt;plugins&gt;</span><br><span class="line">			&lt;plugin&gt;</span><br><span class="line">				&lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;</span><br><span class="line">				&lt;artifactId&gt;maven-jetty-plugin&lt;/artifactId&gt;</span><br><span class="line">				&lt;version&gt;<span class="number">6.1</span>.<span class="number">26</span>&lt;/version&gt;</span><br><span class="line">				&lt;configuration&gt;</span><br><span class="line">					&lt;contextPath&gt;/&lt;/contextPath&gt;</span><br><span class="line">					&lt;scanIntervalSeconds&gt;<span class="number">0</span>&lt;/scanIntervalSeconds&gt;</span><br><span class="line">					&lt;connectors&gt;</span><br><span class="line">						&lt;connector implementation=<span class="string">"org.mortbay.jetty.nio.SelectChannelConnector"</span>&gt;</span><br><span class="line">							&lt;port&gt;<span class="number">8080</span>&lt;/port&gt;</span><br><span class="line">							&lt;maxIdleTime&gt;<span class="number">60000</span>&lt;/maxIdleTime&gt;</span><br><span class="line">						&lt;/connector&gt;</span><br><span class="line">					&lt;/connectors&gt;</span><br><span class="line">				&lt;/configuration&gt;</span><br><span class="line">			&lt;/plugin&gt;</span><br><span class="line">		&lt;/plugins&gt;</span><br><span class="line">	&lt;/build&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样便可以在命令行里用以下命令直接启动jetty服务器：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn jetty:run</span><br></pre></td></tr></table></figure></p>
+<h2 id="u96C6_u6210IDEA"><a href="#u96C6_u6210IDEA" class="headerlink" title="集成IDEA"></a>集成IDEA</h2><p>在菜单<code>Run</code>-&gt;<code>Edit Configurations</code>里，新增一个<code>Maven</code>，填入下图所示的参数：<br><img src="/img/idea-jetty-parameters.jpg" alt=""></p>
+<ul>
+<li>Name：Jetty</li>
+<li>Working directory：默认就好</li>
+<li>Command line：jetty:run</li>
+</ul>
+<p>然后在<code>Runner</code>标签里，填入下图所示的参数：<br><img src="/img/idea-jetty-runner.jpg" alt=""></p>
+<ul>
+<li>VM Options：-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=6006</li>
+</ul>
+<p>端口6006可以自行决定，别和其它端口冲突就行。在菜单<code>Run</code>-&gt;<code>Edit Configurations</code>里，新增一个<code>Remote</code>，填入下图所示的参数：<br><img src="/img/idea-jetty-debug.jpg" alt=""></p>
+<ul>
+<li>Name：Jetty-Remote-Debug</li>
+<li>Port：6006</li>
+</ul>
+<p>和先前在<code>Runner</code>标签里填写的端口一致就行。</p>
+<p>现在就可以试试啦。首先运行Jetty，然后调试Jetty-Remote-Debug。不出意外的话，现在可以访问自己的webapp，并且可以在程序中调试了。现在修改一段程序，编译之后，新程序就能立刻生效了。刷新一下页面看看？</p>
+<h2 id="u5176_u5B83"><a href="#u5176_u5B83" class="headerlink" title="其它"></a>其它</h2><p>照例附送一些Mac OS X的keymap快捷键：</p>
+<ul>
+<li>运行Jetty：Alt+Shift+F10</li>
+<li>调试Jetty-Remote-Debug：Alt+Shift+F9</li>
+<li>编译：Command+Shift+F9</li>
+</ul>
+<h2 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://gist.github.com/naaman/1053217/1fc1403d9d6ebc0194ecd0bf84cb0dec84b92eea" target="_blank" rel="external">https://gist.github.com/naaman/1053217/1fc1403d9d6ebc0194ecd0bf84cb0dec84b92eea</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[思路被打断了怎么办]]></title>
       <url>http://qinghua.github.io/interrupt-train-of-thought/</url>
       <content type="html"><![CDATA[<p>程序猿和工程狮们的日常工作中，难免遇到代码写得正爽的时候被人打断。要重新进入状态需要时间和心力，万一又被打断，这一天就不能好好过了。本文聊一聊可以把副作用尽可能降低的一些办法。<br><a id="more"></a></p>
