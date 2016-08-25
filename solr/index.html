@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://qinghua.github.io/img/solr-dashboard.jpg">
 <meta property="og:image" content="http://qinghua.github.io/img/solr-query.jpg">
 <meta property="og:image" content="http://qinghua.github.io/img/solr-analysis.jpg">
-<meta property="og:updated_time" content="2016-08-13T09:17:14.000Z">
+<meta property="og:updated_time" content="2016-08-15T02:23:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用容器快速上手Apache Solr">
 <meta name="twitter:description" content="Apache Solr是用Java开发的基于Apache Lucene的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。">
@@ -122,7 +122,7 @@
 <p>我用的是mac，通过<code>docker-machine env default</code>命令可以看到默认的<code>default docker-machine</code>的IP地址是<code>192.168.99.100</code>，于是便可以通过<a href="http://192.168.99.100:8983/solr" target="_blank" rel="external">http://192.168.99.100:8983/solr</a>来访问Solr Admin了：<br><img src="/img/solr-dashboard.jpg" alt=""></p>
 <p>在Solr里，<a href="https://cwiki.apache.org/confluence/display/solr/Solr+Cores+and+solr.xml" target="_blank" rel="external">Core</a>可以认为是一个集合，一个Solr实例可以有多个Core。可以说Solr实例和Core的关系像是数据库实例和数据库的关系。现在我们来新建一个core，命名为ggg：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it --user=solr solr bin/solr create_core -c ggg</span><br></pre></td></tr></table></figure></p>
 <h2 id="u7D22_u5F15"><a href="#u7D22_u5F15" class="headerlink" title="索引"></a>索引</h2><p>Solr支持<a href="https://cwiki.apache.org/confluence/display/solr/Uploading+Data+with+Index+Handlers#UploadingDatawithIndexHandlers-XMLFormattedIndexUpdates" target="_blank" rel="external">xml</a>、<a href="https://cwiki.apache.org/confluence/display/solr/Uploading+Data+with+Index+Handlers#UploadingDatawithIndexHandlers-JSONFormattedIndexUpdates" target="_blank" rel="external">json</a>和<a href="https://cwiki.apache.org/confluence/display/solr/Uploading+Data+with+Index+Handlers#UploadingDatawithIndexHandlers-CSVFormattedIndexUpdates" target="_blank" rel="external">csv</a>格式的数据文件用于索引。接下来让我们来试试。首先登录进solr容器：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it --user=solr solr bash</span><br></pre></td></tr></table></figure></p>
-<h3 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h3><p>Solr存储的对象称为Document，每个Document数个Field组成，每个Field代表一个属性。现在按照<code>&lt;add&gt;&lt;doc&gt;&lt;field name=&quot;&quot;&gt;</code>的格式来生成一个xml文件：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt; books.xml</span><br><span class="line">&lt;add&gt;</span><br><span class="line">  &lt;doc&gt;</span><br><span class="line">    &lt;field name=<span class="string">"id"</span>&gt;<span class="number">978</span>-<span class="number">0641723445</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"name"</span>&gt;The Lightning Thief&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"author"</span>&gt;Rick Riordan&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"series_t"</span>&gt;Percy Jackson and the Olympians&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"sequence_i"</span>&gt;<span class="number">1</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"genre_s"</span>&gt;fantasy&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"inStock"</span>&gt;<span class="literal">true</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"price"</span>&gt;<span class="number">12.50</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"pages_i"</span>&gt;<span class="number">384</span>&lt;/field&gt;</span><br><span class="line">  &lt;/doc&gt;</span><br><span class="line">  &lt;doc&gt;</span><br><span class="line">    &lt;field name=<span class="string">"id"</span>&gt;<span class="number">978</span>-<span class="number">1423103349</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"name"</span>&gt;The Sea of Monsters&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"author"</span>&gt;Rick Riordan&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"series_t"</span>&gt;Percy Jackson and the Olympians&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"sequence_i"</span>&gt;<span class="number">2</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"inStock"</span>&gt;<span class="literal">true</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"price"</span>&gt;<span class="number">6.49</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"pages_i"</span>&gt;<span class="number">304</span>&lt;/field&gt;</span><br><span class="line">  &lt;/doc&gt;</span><br><span class="line">&lt;/add&gt;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
+<h3 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h3><p>Solr存储的对象称为Document，每个Document数个Field组成，每个Field代表一个属性。现在按照<code>&lt;add&gt;&lt;doc&gt;&lt;field name=&quot;&quot;&gt;</code>的格式来生成一个xml文件：<br><figure class="highlight sh"><figcaption><span>solr</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt; books.xml</span><br><span class="line">&lt;add&gt;</span><br><span class="line">  &lt;doc&gt;</span><br><span class="line">    &lt;field name=<span class="string">"id"</span>&gt;<span class="number">978</span>-<span class="number">0641723445</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"name"</span>&gt;The Lightning Thief&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"author"</span>&gt;Rick Riordan&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"series_t"</span>&gt;Percy Jackson and the Olympians&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"sequence_i"</span>&gt;<span class="number">1</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"genre_s"</span>&gt;fantasy&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"inStock"</span>&gt;<span class="literal">true</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"price"</span>&gt;<span class="number">12.50</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"pages_i"</span>&gt;<span class="number">384</span>&lt;/field&gt;</span><br><span class="line">  &lt;/doc&gt;</span><br><span class="line">  &lt;doc&gt;</span><br><span class="line">    &lt;field name=<span class="string">"id"</span>&gt;<span class="number">978</span>-<span class="number">1423103349</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"name"</span>&gt;The Sea of Monsters&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"author"</span>&gt;Rick Riordan&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"series_t"</span>&gt;Percy Jackson and the Olympians&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"sequence_i"</span>&gt;<span class="number">2</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"inStock"</span>&gt;<span class="literal">true</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"price"</span>&gt;<span class="number">6.49</span>&lt;/field&gt;</span><br><span class="line">    &lt;field name=<span class="string">"pages_i"</span>&gt;<span class="number">304</span>&lt;/field&gt;</span><br><span class="line">  &lt;/doc&gt;</span><br><span class="line">&lt;/add&gt;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
 <p>细心的你可能已经发现了下面一条数据里并没有<code>fantasy</code>，我故意的~~现在用以下命令将这个xml导入索引：<br><figure class="highlight sh"><figcaption><span>solr</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/post -c ggg books.xml</span><br></pre></td></tr></table></figure></p>
 <p>索引完成后，在Solr Admin的ggg Core的Query里，直接点击Execute Query便可以看到我们新索引的这两条数据：<br><img src="/img/solr-query.jpg" alt=""></p>
 <p>在<code>q</code>里输入搜索的关键词便可以查询索引：</p>
@@ -136,7 +136,7 @@
 <li>fantasy -Rick：<code>-</code>表示过滤</li>
 <li>Lightni：单词不全不能匹配</li>
 <li>Lightn?ng：<code>?</code>匹配一位</li>
-<li>L<em>g：`</em>`匹配多位</li>
+<li>L*g：<code>*</code>匹配多位</li>
 <li>Lightnixx~：<code>~</code>用于模糊查询</li>
 <li>Lightnxxx~：<code>~</code>最多就匹配两位</li>
 </ul>
@@ -207,6 +207,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/redis-cluster/" title="用容器轻松搭建redis主从和集群环境">
+  <strong>上一篇：</strong><br/>
+  <span>
+  用容器轻松搭建redis主从和集群环境</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/spring-scheduler/"  title="Spring Scheduler的使用与坑">
@@ -260,7 +268,7 @@
 		  
 		
 		  
-			<li><a href="/categories/devops/" title="devops">devops<sup>33</sup></a></li>
+			<li><a href="/categories/devops/" title="devops">devops<sup>34</sup></a></li>
 		  
 		
 		  
@@ -305,19 +313,19 @@
 			
 		
 			
-				<li><a href="/tags/ceph/" title="ceph">ceph<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/docker-registry/" title="docker registry">docker registry<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/dubbo/" title="dubbo">dubbo<sup>2</sup></a></li>
+				<li><a href="/tags/ceph/" title="ceph">ceph<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/network/" title="network">network<sup>2</sup></a></li>
+				<li><a href="/tags/marathon/" title="marathon">marathon<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/openstack-swift/" title="openstack swift">openstack swift<sup>2</sup></a></li>
 			
 		
 			
@@ -329,11 +337,11 @@
 			
 		
 			
-				<li><a href="/tags/radosgw/" title="radosgw">radosgw<sup>2</sup></a></li>
+				<li><a href="/tags/thought/" title="thought">thought<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/marathon/" title="marathon">marathon<sup>2</sup></a></li>
+				<li><a href="/tags/dubbo/" title="dubbo">dubbo<sup>2</sup></a></li>
 			
 		
 			
@@ -341,7 +349,7 @@
 			
 		
 			
-				<li><a href="/tags/openstack-swift/" title="openstack swift">openstack swift<sup>2</sup></a></li>
+				<li><a href="/tags/network/" title="network">network<sup>2</sup></a></li>
 			
 		
 			
@@ -349,23 +357,23 @@
 			
 		
 			
-				<li><a href="/tags/thought/" title="thought">thought<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/NET/" title=".NET">.NET<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/rancher/" title="rancher">rancher<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/salt/" title="salt">salt<sup>1</sup></a></li>
+				<li><a href="/tags/radosgw/" title="radosgw">radosgw<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/portus/" title="portus">portus<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tosca/" title="tosca">tosca<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nfs/" title="nfs">nfs<sup>1</sup></a></li>
 			
 		
 		</ul>
