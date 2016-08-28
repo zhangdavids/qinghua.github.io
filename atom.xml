@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qinghua.github.io/"/>
-  <updated>2016-08-24T10:06:16.000Z</updated>
+  <updated>2016-08-28T13:06:21.000Z</updated>
   <id>http://qinghua.github.io/</id>
   
   <author>
@@ -14,6 +14,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>用容器快速上手Elasticsearch</title>
+    <link href="http://qinghua.github.io/elastic-search/"/>
+    <id>http://qinghua.github.io/elastic-search/</id>
+    <published>2016-08-28T13:06:34.000Z</published>
+    <updated>2016-08-28T13:06:21.000Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;a href=&quot;https://www.elastic.co/products/elasticsearch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Elasticsearch&lt;/a&gt;是用Java开发的基于&lt;a href=&quot;https://lucene.apache.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Apache Lucene&lt;/a&gt;的一个近乎实时的分布式搜索分析引擎。维基百科、Stack Overflow、GitHub等都采用它来作为全文搜索引擎。本文旨在用docker来快速入门并尝试Elasticsearch提供的基本功能。&lt;/p&gt;
+&lt;p&gt;对&lt;a href=&quot;http://lucene.apache.org/solr/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Apache Solr&lt;/a&gt;入门有兴趣的朋友请参考&lt;a href=&quot;/solr&quot;&gt;用容器快速上手Apache Solr&lt;/a&gt;。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;u542F_u52A8&quot;&gt;&lt;a href=&quot;#u542F_u52A8&quot; class=&quot;headerlink&quot; title=&quot;启动&quot;&gt;&lt;/a&gt;启动&lt;/h2&gt;&lt;p&gt;关于Elasticsearch的入门知识，有一本gitbook：&lt;a href=&quot;https://www.gitbook.com/book/fuxiaopang/learnelasticsearch/details&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《Elasticsearch 权威指南》&lt;/a&gt;翻译得不错。本文关心的是实际操作，所以这就开始吧。通过docker，一条命令就可以直接启动Elasticsearch：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;docker run &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; --net=host --name=es elasticsearch:&lt;span class=&quot;number&quot;&gt;2.3&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;我用的是mac，通过&lt;code&gt;docker-machine env default&lt;/code&gt;命令可以看到默认的&lt;code&gt;default docker-machine&lt;/code&gt;的IP地址是&lt;code&gt;192.168.99.100&lt;/code&gt;，于是便可以通过&lt;a href=&quot;http://192.168.99.100:9200/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://192.168.99.100:9200/&lt;/a&gt;来从Elasticsearch获得json数据了：&lt;br&gt;&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;&lt;span class=&quot;attribute&quot;&gt;name&lt;/span&gt;&quot; : &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;Lorvex&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;&lt;span class=&quot;attribute&quot;&gt;cluster_name&lt;/span&gt;&quot; : &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;elasticsearch&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;&lt;span class=&quot;attribute&quot;&gt;version&lt;/span&gt;&quot; : &lt;span class=&quot;value&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;number&lt;/span&gt;&quot; : &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;2.3.5&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;build_hash&lt;/span&gt;&quot; : &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;90f439ff60a3c0f497f91663701e64ccd01edbb4&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;build_timestamp&lt;/span&gt;&quot; : &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;2016-07-27T10:36:52Z&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;build_snapshot&lt;/span&gt;&quot; : &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;lucene_version&lt;/span&gt;&quot; : &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;5.5.0&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;/span&gt;&amp;#125;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;&lt;span class=&quot;attribute&quot;&gt;tagline&lt;/span&gt;&quot; : &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;You Know, for Search&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;也可以使用&lt;code&gt;_cat&lt;/code&gt;直接在命令行获取Elasticsearch的健康状态和节点状态：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;192.168.99.100:9200/_cat/health?v&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;192.168.99.100:9200/_cat/nodes?v&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;u7D22_u5F15&quot;&gt;&lt;a href=&quot;#u7D22_u5F15&quot; class=&quot;headerlink&quot; title=&quot;索引&quot;&gt;&lt;/a&gt;索引&lt;/h2&gt;&lt;p&gt;与Solr不同，Elasticsearch只支持json格式。创建索引的过程，就是向服务器POST数据的过程：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;first_name&quot; : &quot;John&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;last_name&quot; :  &quot;Smith&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;age&quot; :        25,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;about&quot; :      &quot;I love to go rock climbing&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;interests&quot;: [ &quot;sports&quot;, &quot;music&quot; ]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;立刻就能得到Elasticsearch返回的结果：&lt;strong&gt;{“_index”:”megacorp”,”_type”:”employee”,”_id”:”AVbK2ssDm7bdYo65QJ6k”,”_version”:1,”_shards”:{“total”:2,”successful”:1,”failed”:0},”created”:true}&lt;/strong&gt;。Url里的megacorp是索引的名字（想象成一个数据库），employee是类型的名字（想象成一张表）。返回的&lt;code&gt;_id&lt;/code&gt;是Elasticsearch随机创建的一个ID，用于标识数据。&lt;/p&gt;
+&lt;p&gt;可以通过以下url获取Elasticsearch的索引信息：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/_cat/indices?v&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;修改索引的话，发出PUT请求就可以了（别忘了把ID换成你自己生成的&lt;code&gt;_id&lt;/code&gt;）：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPUT &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/AVbK2ssDm7bdYo65QJ6k&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;first_name&quot; : &quot;Johnie&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;last_name&quot; :  &quot;Smithreen&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;age&quot; :        38,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;about&quot; :      &quot;I do not love to go rock climbing&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;interests&quot;: []&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如果指定的ID不存在，那么PUT也会新建一条记录。删除索引的话，发出DELETE请求就可以了：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XDELETE &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/AVbK2ssDm7bdYo65QJ6k&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;或者删除整个索引：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XDELETE &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;再次获取索引信息，便会看到已经没有索引了。让我们加上三条数据，以备下一节搜索使用：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/1&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;first_name&quot; : &quot;John&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;last_name&quot; :  &quot;Smith&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;age&quot; :        25,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;about&quot; :      &quot;I love to go rock climbing&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;interests&quot;: [ &quot;sports&quot;, &quot;music&quot; ]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/2&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;first_name&quot; :  &quot;Jane&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;last_name&quot; :   &quot;Smith&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;age&quot; :         32,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;about&quot; :       &quot;I like to collect rock albums&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;interests&quot;:  [ &quot;music&quot; ]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/3&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;first_name&quot; :  &quot;Douglas&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;last_name&quot; :   &quot;Fir&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;age&quot; :         35,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;about&quot;:        &quot;I like to build cabinets&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;interests&quot;:  [ &quot;forestry&quot; ]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;u641C_u7D22&quot;&gt;&lt;a href=&quot;#u641C_u7D22&quot; class=&quot;headerlink&quot; title=&quot;搜索&quot;&gt;&lt;/a&gt;搜索&lt;/h2&gt;&lt;h3 id=&quot;u67E5_u8BE2&quot;&gt;&lt;a href=&quot;#u67E5_u8BE2&quot; class=&quot;headerlink&quot; title=&quot;查询&quot;&gt;&lt;/a&gt;查询&lt;/h3&gt;&lt;p&gt;要查看刚刚创建的数据，直接get就可以了：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/1&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/2&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/3&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;全部查询改一下url就可以了：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/_search&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/_search&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/_search&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;u7B80_u6613_u641C_u7D22&quot;&gt;&lt;a href=&quot;#u7B80_u6613_u641C_u7D22&quot; class=&quot;headerlink&quot; title=&quot;简易搜索&quot;&gt;&lt;/a&gt;简易搜索&lt;/h3&gt;&lt;p&gt;上面的命令都只能算查询，还不算搜索。接下来让我们尝试Elasticsearch强大的搜索功能：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/_search?q=last_name:Smith&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/_search&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;match&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;last_name&quot; : &quot;Smith&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;u67E5_u8BE2DSL&quot;&gt;&lt;a href=&quot;#u67E5_u8BE2DSL&quot; class=&quot;headerlink&quot; title=&quot;查询DSL&quot;&gt;&lt;/a&gt;查询DSL&lt;/h3&gt;&lt;p&gt;上面两条命令都是去获取&lt;code&gt;last_name&lt;/code&gt;为&lt;code&gt;Smith&lt;/code&gt;的数据，但是下面一条用到了&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;查询DSL&lt;/a&gt;。这是Elasticsearch提供的DSL查询语言，可以通过它完成更加复杂的搜索。接下来除了&lt;code&gt;Smith&lt;/code&gt;以外，我们还要增加30岁以上这一条件：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/_search&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;filtered&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;filter&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &quot;range&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &quot;age&quot; : &amp;#123; &quot;gt&quot; : 30 &amp;#125; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &quot;match&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &quot;last_name&quot; : &quot;smith&quot; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;在这里介绍一下&lt;code&gt;filter&lt;/code&gt;和&lt;code&gt;query&lt;/code&gt;。可以这么理解：&lt;code&gt;filter&lt;/code&gt;是精确查找（想象成sql里where子句的=、&amp;lt;、&amp;gt;），速度快，有缓存。&lt;code&gt;query&lt;/code&gt;是模糊查找（想象成sql里where子句的like，但是能根据匹配度打分），虽然没有&lt;code&gt;filter&lt;/code&gt;那么快，但是查询结果能更准确一些。业务上的查询通常都是同时使用二者，通过&lt;code&gt;filter&lt;/code&gt;快速找到对象数据，再通过&lt;code&gt;query&lt;/code&gt;来匹配。&lt;/p&gt;
+&lt;h3 id=&quot;u5168_u6587_u641C_u7D22&quot;&gt;&lt;a href=&quot;#u5168_u6587_u641C_u7D22&quot; class=&quot;headerlink&quot; title=&quot;全文搜索&quot;&gt;&lt;/a&gt;全文搜索&lt;/h3&gt;&lt;p&gt;接下来尝试全文搜索，从&lt;code&gt;about&lt;/code&gt;的句子里查询想要的数据：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/_search&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;match&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;about&quot; : &quot;rock climbing&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;查到了两个结果。返回值包含了一项&lt;code&gt;_score&lt;/code&gt;，既含有&lt;code&gt;rock&lt;/code&gt;又含有&lt;code&gt;climbing&lt;/code&gt;的数据，得分明显高于只含有&lt;code&gt;rock&lt;/code&gt;的数据。理所当然的，得分高的数据排在上面。如果想要精确匹配&lt;code&gt;rock climbing&lt;/code&gt;，把&lt;code&gt;match&lt;/code&gt;改为&lt;code&gt;match_phrase&lt;/code&gt;就可以了：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/_search&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;query&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;match_phrase&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;about&quot; : &quot;rock climbing&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;u7EDF_u8BA1&quot;&gt;&lt;a href=&quot;#u7EDF_u8BA1&quot; class=&quot;headerlink&quot; title=&quot;统计&quot;&gt;&lt;/a&gt;统计&lt;/h3&gt;&lt;p&gt;查找最受欢迎的兴趣：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/_search&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;aggs&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;all_interests&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;terms&quot;: &amp;#123; &quot;field&quot;: &quot;interests&quot; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;查找每个兴趣的平均年龄：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&#39;http://192.168.99.100:9200/megacorp/employee/_search&#39;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;aggs&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;all_interests&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;terms&quot; : &amp;#123; &quot;field&quot; : &quot;interests&quot; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;aggs&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &quot;avg_age&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &quot;avg&quot; : &amp;#123; &quot;field&quot; : &quot;age&quot; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这些数据都是实时计算出来的。就像使用SQL来查询数据库一样，Elasticsearch提供了自己的DSL来让我们基于复杂的条件来搜索。&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;是统计功能的官方文档。&lt;/p&gt;
+&lt;h2 id=&quot;u4E2D_u6587&quot;&gt;&lt;a href=&quot;#u4E2D_u6587&quot; class=&quot;headerlink&quot; title=&quot;中文&quot;&gt;&lt;/a&gt;中文&lt;/h2&gt;&lt;p&gt;同Solr一样，要想让Elasticsearch支持中文分词，需要使用中文分词组件。这里我们还是用&lt;a href=&quot;https://github.com/medcl/elasticsearch-analysis-mmseg&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;mmseg插件&lt;/a&gt;。首先下载并解压：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;wget -c https://github.com/medcl/elasticsearch-analysis-mmseg/releases/download/v1.&lt;span class=&quot;number&quot;&gt;9.4&lt;/span&gt;/elasticsearch-analysis-mmseg-&lt;span class=&quot;number&quot;&gt;1.9&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;.zip&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;unzip &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; elasticsearch-analysis-mmseg-&lt;span class=&quot;number&quot;&gt;1.9&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; elasticsearch-analysis-mmseg-&lt;span class=&quot;number&quot;&gt;1.9&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;.zip&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sed -i &lt;span class=&quot;string&quot;&gt;&#39;s/2.3.4/2.3.5/&#39;&lt;/span&gt; elasticsearch-analysis-mmseg-&lt;span class=&quot;number&quot;&gt;1.9&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;/plugin-descriptor.properties&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;1.9.4版的插件只支持Elasticsearch 2.3.4版，要想支持2.3.5，就需要把&lt;code&gt;elasticsearch.version&lt;/code&gt;配置改为&lt;code&gt;2.3.5&lt;/code&gt;。除此之外，还需要加点儿东西到Elasticsearch的配置文件里：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; es.yml&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;network.host: &lt;span class=&quot;number&quot;&gt;0.0&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;0.0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;index:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  analysis:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    analyzer:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      mmseg_maxword:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;type&lt;/span&gt;: custom&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        filter:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        - lowercase&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tokenizer: mmseg_maxword&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      mmseg_maxword_with_cut_letter_digi:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;type&lt;/span&gt;: custom&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        filter:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        - lowercase&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        - cut_letter_digit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tokenizer: mmseg_maxword&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;EOF&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;上述配置文件的具体语法可以参考&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;。接下来就可以启动容器了，分别挂载配置文件和插件：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;docker rm &lt;span class=&quot;operator&quot;&gt;-f&lt;/span&gt; es&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;docker run &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; --net=host --name=es \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    -v `&lt;span class=&quot;built_in&quot;&gt;pwd&lt;/span&gt;`/es.yml:/usr/share/elasticsearch/config/elasticsearch.yml \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    -v `&lt;span class=&quot;built_in&quot;&gt;pwd&lt;/span&gt;`/elasticsearch-analysis-mmseg-&lt;span class=&quot;number&quot;&gt;1.9&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;/:/usr/share/elasticsearch/plugins/elasticsearch-analysis-mmseg-&lt;span class=&quot;number&quot;&gt;1.9&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;/ \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    elasticsearch:&lt;span class=&quot;number&quot;&gt;2.3&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Elasticsearch服务启动后，就可以增加索引和&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;映射&lt;/a&gt;（mapping，可以理解为数据类型，有点像solr的schema），并且插入一些数据了：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPUT http://&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;99.100&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;9200&lt;/span&gt;/index&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST http://&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;99.100&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;9200&lt;/span&gt;/index/fulltext/_mapping &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;fulltext&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;_all&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;analyzer&quot;: &quot;mmseg_maxword&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;search_analyzer&quot;: &quot;mmseg_maxword&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;term_vector&quot;: &quot;no&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;store&quot;: &quot;false&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;properties&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;content&quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &quot;type&quot;: &quot;string&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &quot;store&quot;: &quot;no&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &quot;term_vector&quot;: &quot;with_positions_offsets&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &quot;analyzer&quot;: &quot;mmseg_maxword&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &quot;search_analyzer&quot;: &quot;mmseg_maxword&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &quot;include_in_all&quot;: &quot;true&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &quot;boost&quot;: 8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST http://&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;99.100&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;9200&lt;/span&gt;/index/fulltext/&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;content:&quot;美国留给伊拉克的是个烂摊子吗&quot;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST http://&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;99.100&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;9200&lt;/span&gt;/index/fulltext/&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;content:&quot;公安部：各地校车将享最高路权&quot;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST http://&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;99.100&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;9200&lt;/span&gt;/index/fulltext/&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;content:&quot;中韩渔警冲突调查：韩警平均每天扣1艘中国渔船&quot;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST http://&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;99.100&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;9200&lt;/span&gt;/index/fulltext/&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&#39;&amp;#123;content:&quot;中国驻洛杉矶领事馆遭亚裔男子枪击 嫌犯已自首&quot;&amp;#125;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;最后搜索&lt;code&gt;中国&lt;/code&gt;看看：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST http://&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;99.100&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;9200&lt;/span&gt;/index/fulltext/_search  &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;query&quot; : &amp;#123; &quot;term&quot; : &amp;#123; &quot;content&quot; : &quot;中国&quot; &amp;#125;&amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;highlight&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;pre_tags&quot; : [&quot;&amp;lt;tag1&amp;gt;&quot;, &quot;&amp;lt;tag2&amp;gt;&quot;],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;post_tags&quot; : [&quot;&amp;lt;/tag1&amp;gt;&quot;, &quot;&amp;lt;/tag2&amp;gt;&quot;],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &quot;fields&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &quot;content&quot; : &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;可以使用&lt;code&gt;_analyze&lt;/code&gt;来查看分析的过程：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl &lt;span class=&quot;string&quot;&gt;&quot;http://192.168.99.100:9200/index/_analyze?analyzer=mmseg_maxword&amp;amp;pretty=true&quot;&lt;/span&gt; &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;美国留给伊拉克的是个烂摊子吗&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;可见，这句话被解析成：美国、留给、伊、拉克、的、是个、烂、摊子、吗，还不是非常完美。&lt;code&gt;伊拉克&lt;/code&gt;、&lt;code&gt;烂摊子&lt;/code&gt;都没有很好地识别出来。&lt;/p&gt;
+&lt;p&gt;有兴趣的话，还可以重建容器，跟无中文分词的效果对比一下。除了mmseg，大神medcl还写了一个&lt;a href=&quot;https://github.com/medcl/elasticsearch-rtf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;elasticsearch-rtf版本&lt;/a&gt;，涵盖诸多中文分词工具，可以直接使用。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://www.elastic.co/products/elasticsearch&quot;&gt;Elasticsearch&lt;/a&gt;是用Java开发的基于&lt;a href=&quot;https://lucene.apache.org/&quot;&gt;Apache Lucene&lt;/a&gt;的一个近乎实时的分布式搜索分析引擎。维基百科、Stack Overflow、GitHub等都采用它来作为全文搜索引擎。本文旨在用docker来快速入门并尝试Elasticsearch提供的基本功能。&lt;/p&gt;
+&lt;p&gt;对&lt;a href=&quot;http://lucene.apache.org/solr/&quot;&gt;Apache Solr&lt;/a&gt;入门有兴趣的朋友请参考&lt;a href=&quot;/solr&quot;&gt;用容器快速上手Apache Solr&lt;/a&gt;。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="devops" scheme="http://qinghua.github.io/categories/devops/"/>
+    
+    
+      <category term="elasticsearch" scheme="http://qinghua.github.io/tags/elasticsearch/"/>
+    
+  </entry>
   
   <entry>
     <title>用容器轻松搭建redis主从和集群环境</title>
@@ -57,9 +110,10 @@
     <link href="http://qinghua.github.io/solr/"/>
     <id>http://qinghua.github.io/solr/</id>
     <published>2016-08-13T05:51:10.000Z</published>
-    <updated>2016-08-15T02:23:09.000Z</updated>
+    <updated>2016-08-27T05:52:18.000Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;a href=&quot;http://lucene.apache.org/solr/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Apache Solr&lt;/a&gt;是用Java开发的基于&lt;a href=&quot;https://lucene.apache.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Apache Lucene&lt;/a&gt;的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://lucene.apache.org/solr/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Apache Solr&lt;/a&gt;是用Java开发的基于&lt;a href=&quot;https://lucene.apache.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Apache Lucene&lt;/a&gt;的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。&lt;/p&gt;
+&lt;p&gt;对&lt;a href=&quot;https://www.elastic.co/products/elasticsearch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Elasticsearch&lt;/a&gt;入门有兴趣的朋友请参考&lt;a href=&quot;/elastic-search&quot;&gt;用容器快速上手Elasticsearch&lt;/a&gt;。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&quot;u542F_u52A8&quot;&gt;&lt;a href=&quot;#u542F_u52A8&quot; class=&quot;headerlink&quot; title=&quot;启动&quot;&gt;&lt;/a&gt;启动&lt;/h2&gt;&lt;p&gt;关于Solr的入门知识，有一本gitbook：&lt;a href=&quot;https://www.gitbook.com/book/paynexu/create-your-vertical-search-engine-with-solr/details&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《用Solr构建垂直搜索引擎》&lt;/a&gt;写得不错。本文关心的是实际操作，所以这就开始吧。通过docker，一条命令就可以直接启动Solr：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;docker run &lt;span class=&quot;operator&quot;&gt;-d&lt;/span&gt; -p &lt;span class=&quot;number&quot;&gt;8983&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;8983&lt;/span&gt; --name solr solr:&lt;span class=&quot;number&quot;&gt;6.1&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;我用的是mac，通过&lt;code&gt;docker-machine env default&lt;/code&gt;命令可以看到默认的&lt;code&gt;default docker-machine&lt;/code&gt;的IP地址是&lt;code&gt;192.168.99.100&lt;/code&gt;，于是便可以通过&lt;a href=&quot;http://192.168.99.100:8983/solr&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://192.168.99.100:8983/solr&lt;/a&gt;来访问Solr Admin了：&lt;br&gt;&lt;img src=&quot;/img/solr-dashboard.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;在Solr里，&lt;a href=&quot;https://cwiki.apache.org/confluence/display/solr/Solr+Cores+and+solr.xml&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Core&lt;/a&gt;可以认为是一个集合，一个Solr实例可以有多个Core。可以说Solr实例和Core的关系像是数据库实例和数据库的关系。现在我们来新建一个core，命名为ggg：&lt;br&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;docker &lt;span class=&quot;built_in&quot;&gt;exec&lt;/span&gt; -it --user=solr solr bin/solr create_core -c ggg&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -118,7 +172,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;&lt;a href=&quot;http://lucene.apache.org/solr/&quot;&gt;Apache Solr&lt;/a&gt;是用Java开发的基于&lt;a href=&quot;https://lucene.apache.org/&quot;&gt;Apache Lucene&lt;/a&gt;的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。&lt;br&gt;
+      &lt;p&gt;&lt;a href=&quot;http://lucene.apache.org/solr/&quot;&gt;Apache Solr&lt;/a&gt;是用Java开发的基于&lt;a href=&quot;https://lucene.apache.org/&quot;&gt;Apache Lucene&lt;/a&gt;的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。&lt;/p&gt;
+&lt;p&gt;对&lt;a href=&quot;https://www.elastic.co/products/elasticsearch&quot;&gt;Elasticsearch&lt;/a&gt;入门有兴趣的朋友请参考&lt;a href=&quot;/elastic-search&quot;&gt;用容器快速上手Elasticsearch&lt;/a&gt;。&lt;br&gt;
     
     </summary>
     
@@ -1025,487 +1080,6 @@
     
     
       <category term="prometheus" scheme="http://qinghua.github.io/tags/prometheus/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>TOSCA简介</title>
-    <link href="http://qinghua.github.io/tosca/"/>
-    <id>http://qinghua.github.io/tosca/</id>
-    <published>2016-03-28T11:29:04.000Z</published>
-    <updated>2016-03-29T09:35:22.000Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;a href=&quot;https://www.oasis-open.org/committees/tosca/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;TOSCA&lt;/a&gt;（Topology and Orchestration Specification for Cloud Applications）是由OASIS组织制定的云应用拓扑编排规范。通俗地说，就是制定了一个标准，用来描述云平台上应用的拓扑结构。目前支持XML和YAML，Cloudiy的蓝图就是基于这个规范而来。这个规范比较庞大，本文尽量浓缩了&lt;a href=&quot;http://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.0/TOSCA-Simple-Profile-YAML-v1.0.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;TOSCA的YAML版&lt;/a&gt;前两章，以便用尽量少的时间了解尽量多的规范内容。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;u7B80_u4ECB&quot;&gt;&lt;a href=&quot;#u7B80_u4ECB&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;TOSCA的基本概念只有两个：节点（node）和关系（relationship）。节点有许多类型，可以是一台服务器，一个网络，一个计算节点等等。关系描述了节点之间是如何连接的。举个栗子：一个nodejs应用（节点）部署在（关系）名为host的主机（节点）上。节点和关系都可以通过程序来扩展和实现。&lt;/p&gt;
-&lt;p&gt;目前它的开源实现有OpenStack (Heat-Translator，Tacker，Senlin)，Alien4Cloud，Cloudify等。&lt;/p&gt;
-&lt;h2 id=&quot;u793A_u4F8B&quot;&gt;&lt;a href=&quot;#u793A_u4F8B&quot; class=&quot;headerlink&quot; title=&quot;示例&quot;&gt;&lt;/a&gt;示例&lt;/h2&gt;&lt;h3 id=&quot;Hello_World&quot;&gt;&lt;a href=&quot;#Hello_World&quot; class=&quot;headerlink&quot; title=&quot;Hello World&quot;&gt;&lt;/a&gt;Hello World&lt;/h3&gt;&lt;p&gt;首先登场的是广大程序猿和攻城狮们都喜闻乐见的Hello World，但是其实里面并没有Hello World，只是比较简单而已。先看下面这段描述文件：&lt;/p&gt;
-&lt;pre&gt;
-tosca_definitions_version: tosca_simple_yaml_1_0
-
-description: Template for deploying a single server with predefined properties.
-
-topology_template:
-  node_templates:
-    my_server:
-      type: tosca.nodes.Compute
-      capabilities:
-        host:
-          properties:
-            num_cpus: 1
-            disk_size: 10 GB
-            mem_size: 4096 MB
-        os:
-          properties:
-            architecture: x86_64
-            type: linux 
-            distribution: rhel 
-            version: 6.5 
-&lt;/pre&gt;
-
-&lt;p&gt;除了TOSCA的版本&lt;code&gt;tosca_definitions_version&lt;/code&gt;和描述信息&lt;code&gt;description&lt;/code&gt;以外，就是这个&lt;code&gt;topology_template&lt;/code&gt;了。这里我们看到有一个名为&lt;code&gt;my_server&lt;/code&gt;的节点，它的类型是&lt;code&gt;tosca.nodes.Compute&lt;/code&gt;。这个类型预置了两个&lt;code&gt;capabilities&lt;/code&gt;信息，一个是&lt;code&gt;host&lt;/code&gt;，定义了硬件信息；另一个是&lt;code&gt;os&lt;/code&gt;，定义了操作系统信息。&lt;/p&gt;
-&lt;h3 id=&quot;u8F93_u5165_u8F93_u51FA&quot;&gt;&lt;a href=&quot;#u8F93_u5165_u8F93_u51FA&quot; class=&quot;headerlink&quot; title=&quot;输入输出&quot;&gt;&lt;/a&gt;输入输出&lt;/h3&gt;&lt;p&gt;再看看下面这个描述文件：&lt;/p&gt;
-&lt;pre&gt;
-topology_template:
-  &lt;b style=&quot;color:magenta&quot;&gt;inputs&lt;/b&gt;:
-    cpus:
-      type: integer
-      description: Number of CPUs for the server.
-      constraints:
-        - valid_values: [ 1, 2, 4, 8 ]
-
-  node_templates:
-    my_server:
-      type: tosca.nodes.Compute
-      capabilities:
-        host:
-          properties:
-            num_cpus: { get_input: cpus }
-            mem_size: 2048  MB
-            disk_size: 10 GB
-
-  &lt;b style=&quot;color:magenta&quot;&gt;outputs&lt;/b&gt;:
-    server_ip:
-      description: The private IP address of the provisioned server.
-      value: { get_attribute: [ my_server, private_address ] }
-&lt;/pre&gt;
-
-&lt;p&gt;这里的&lt;code&gt;inputs&lt;/code&gt;和&lt;code&gt;outputs&lt;/code&gt;分别定义了输入和输出。输入的&lt;code&gt;cpus&lt;/code&gt;是在1，2，4和8中的一个整数，而输出的&lt;code&gt;server_ip&lt;/code&gt;就是&lt;code&gt;my_server&lt;/code&gt;这个节点的&lt;code&gt;private_address&lt;/code&gt;也就是私有IP地址。另外一点是TOSCA提供了一些内置函数，在上面这个文件中使用了&lt;code&gt;get_input&lt;/code&gt;和&lt;code&gt;get_attribute&lt;/code&gt;。输入参数可以通过&lt;code&gt;get_input&lt;/code&gt;被使用。&lt;/p&gt;
-&lt;h3 id=&quot;u5B89_u88C5_u8F6F_u4EF6&quot;&gt;&lt;a href=&quot;#u5B89_u88C5_u8F6F_u4EF6&quot; class=&quot;headerlink&quot; title=&quot;安装软件&quot;&gt;&lt;/a&gt;安装软件&lt;/h3&gt;&lt;p&gt;第三个描述文件如下：&lt;/p&gt;
-&lt;pre&gt;
-topology_template:
-  inputs:
-    # 略
-
-  node_templates:
-    mysql:
-      type: &lt;b style=&quot;color:magenta&quot;&gt;tosca.nodes.DBMS.MySQL&lt;/b&gt;
-      properties:
-        root_password: { get_input: my_mysql_rootpw }
-        port: { get_input: my_mysql_port }
-      &lt;b style=&quot;color:magenta&quot;&gt;requirements&lt;/b&gt;:
-        - host: db_server
-
-    db_server:
-      type: tosca.nodes.Compute
-      capabilities:
-        # 略
-&lt;/pre&gt;
-
-&lt;p&gt;我们看到了一个新的节点类型：&lt;code&gt;tosca.nodes.DBMS.MySQL&lt;/code&gt;。这个类型允许接收&lt;code&gt;root_password&lt;/code&gt;和&lt;code&gt;port&lt;/code&gt;的参数。在&lt;code&gt;requirements&lt;/code&gt;里定义了&lt;code&gt;mysql&lt;/code&gt;这个节点需要被安装到&lt;code&gt;db_server&lt;/code&gt;这个节点上，这就是“关系”。如果只想表明依赖，比如说&lt;code&gt;service_a&lt;/code&gt;依赖于&lt;code&gt;service_b&lt;/code&gt;，也可以直接用&lt;code&gt;- dependency: service_b&lt;/code&gt;来描述。上面文件的拓扑结构如下图：&lt;br&gt;&lt;img src=&quot;http://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.0/csprd02/TOSCA-Simple-Profile-YAML-v1.0-csprd02_files/image003.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;u521D_u59CB_u5316_u6570_u636E_u5E93&quot;&gt;&lt;a href=&quot;#u521D_u59CB_u5316_u6570_u636E_u5E93&quot; class=&quot;headerlink&quot; title=&quot;初始化数据库&quot;&gt;&lt;/a&gt;初始化数据库&lt;/h3&gt;&lt;p&gt;第四个描述文件如下：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates:
-    my_db:
-      type: &lt;b style=&quot;color:magenta&quot;&gt;tosca.nodes.Database.MySQL&lt;/b&gt;
-      properties:
-        name: { get_input: database_name }
-        user: { get_input: database_user }
-        password: { get_input: database_password }
-        port: { get_input: database_port }
-      &lt;b style=&quot;color:magenta&quot;&gt;artifacts&lt;/b&gt;:
-        db_content:
-          file: files/my_db_content.txt
-          type: tosca.artifacts.File
-      requirements:
-        - host: mysql
-      interfaces:
-        &lt;b style=&quot;color:magenta&quot;&gt;Standard:
-          create:
-            implementation: db_create.sh&lt;/b&gt;
-            inputs:
-              db_data: { get_artifact: [ SELF, db_content ] }
-
-    mysql:
-      type: tosca.nodes.DBMS.MySQL
-      properties:
-        root_password: { get_input: mysql_rootpw }
-        port: { get_input: mysql_port }
-      requirements:
-        - host: db_server
-
-    db_server:
-      # 略
-&lt;/pre&gt;
-
-&lt;p&gt;这里的&lt;code&gt;tosca.nodes.Database.MySQL&lt;/code&gt;表示一个MySQL数据库的实例。在&lt;code&gt;artifacts&lt;/code&gt;的&lt;code&gt;db_content&lt;/code&gt;里指定了一个文本文件，而这个文件将被&lt;code&gt;interfaces&lt;/code&gt;里的&lt;code&gt;Create&lt;/code&gt;所用，为&lt;code&gt;db_create.sh&lt;/code&gt;脚本提供数据。&lt;code&gt;Standard&lt;/code&gt;表示生命周期，可能会包含&lt;code&gt;configure&lt;/code&gt;、&lt;code&gt;start&lt;/code&gt;、&lt;code&gt;stop&lt;/code&gt;等各种操作，而&lt;code&gt;db_create.sh&lt;/code&gt;本身是对&lt;code&gt;tosca.nodes.Database.MySQL&lt;/code&gt;提供的默认&lt;code&gt;create&lt;/code&gt;操作的一个重写。如下图：&lt;br&gt;&lt;img src=&quot;http://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.0/csprd02/TOSCA-Simple-Profile-YAML-v1.0-csprd02_files/image004.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;u4E24_u5C42_u5E94_u7528&quot;&gt;&lt;a href=&quot;#u4E24_u5C42_u5E94_u7528&quot; class=&quot;headerlink&quot; title=&quot;两层应用&quot;&gt;&lt;/a&gt;两层应用&lt;/h3&gt;&lt;p&gt;再来看看第五个描述文件：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates:
-    wordpress:
-      type: tosca.nodes.WebApplication.WordPress
-      properties:
-        context_root: { get_input: context_root }
-        admin_user: { get_input: wp_admin_username }
-        admin_password: { get_input: wp_admin_password }
-        db_host: { get_attribute: [ db_server, private_address ] }
-      &lt;b style=&quot;color:magenta&quot;&gt;requirements:
-        - host: apache
-        - database_endpoint: wordpress_db&lt;/b&gt;
-      interfaces:
-        Standard:
-          inputs:
-            db_host: { get_attribute: [ db_server, private_address ] }
-            db_port: { get_property: [ wordpress_db, port ] }
-            db_name: { get_property: [ wordpress_db, name ] }
-            db_user: { get_property: [ wordpress_db, user ] }
-            db_password: { get_property: [ wordpress_db, password ] }  
-    apache:
-      type: tosca.nodes.WebServer.Apache
-      properties:
-        # 略
-      &lt;b style=&quot;color:magenta&quot;&gt;requirements:
-        - host: web_server&lt;/b&gt;
-    web_server:
-      type: tosca.nodes.Compute
-      # 略
-
-    wordpress_db:
-      type: tosca.nodes.Database.MySQL
-      # 略
-    mysql:
-      type: tosca.nodes.DBMS.MySQL
-      # 略
-    db_server:
-      type: tosca.nodes.Compute
-      # 略
-&lt;/pre&gt;
-
-&lt;p&gt;这个文件描述了一个很常见的拓扑结构：&lt;code&gt;mysql&lt;/code&gt;里有一个&lt;code&gt;wordpress_db&lt;/code&gt;，运行在&lt;code&gt;db_server&lt;/code&gt;上；&lt;code&gt;apache&lt;/code&gt;部署了一个&lt;code&gt;wordpress&lt;/code&gt;，运行在&lt;code&gt;web_server&lt;/code&gt;上。&lt;code&gt;wordpress&lt;/code&gt;需要&lt;code&gt;wordpress_db&lt;/code&gt;。&lt;/p&gt;
-&lt;h3 id=&quot;u5173_u7CFB_u5B9A_u5236_u5316&quot;&gt;&lt;a href=&quot;#u5173_u7CFB_u5B9A_u5236_u5316&quot; class=&quot;headerlink&quot; title=&quot;关系定制化&quot;&gt;&lt;/a&gt;关系定制化&lt;/h3&gt;&lt;p&gt;第六个描述文件：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates:
-    wordpress:
-      type: tosca.nodes.WebApplication.WordPress
-      properties:
-        # 略
-      requirements:
-        - host: apache
-        - database_endpoint:
-            node: wordpress_db
-            &lt;b style=&quot;color:magenta&quot;&gt;relationship: my.types.WordpressDbConnection&lt;/b&gt;
-    wordpress_db:
-      type: tosca.nodes.Database.MySQL
-      properties:
-        # 略
-      requirements:
-        - host: mysql
-  &lt;b style=&quot;color:magenta&quot;&gt;relationship_templates:
-    my.types.WordpressDbConnection:&lt;/b&gt;
-      type: ConnectsTo
-      interfaces:
-        Configure:
-          pre_configure_source: scripts/wp_db_configure.sh
-&lt;/pre&gt;
-
-&lt;p&gt;这里的关注点是&lt;code&gt;relationship&lt;/code&gt;里的&lt;code&gt;my.types.WordpressDbConnection&lt;/code&gt;。这是一个自定义的关系，在文件的下半部分描述了详细定义。它实际上是一个&lt;code&gt;ConnectsTo&lt;/code&gt;类型，为&lt;code&gt;pre_configure_source&lt;/code&gt;操作提供了一个自定义脚本。这个定义也可以单独提出一个文件，就像下面这样：&lt;/p&gt;
-&lt;pre&gt;
-tosca_definitions_version: tosca_simple_yaml_1_0
-
-description: Definition of custom WordpressDbConnection relationship type
-
-&lt;b style=&quot;color:magenta&quot;&gt;relationship_types:
-  my.types.WordpressDbConnection:&lt;/b&gt;
-    derived_from: tosca.relationships.ConnectsTo
-    interfaces:
-      Configure:
-        pre_configure_source: scripts/wp_db_configure.sh
-&lt;/pre&gt;
-
-&lt;h3 id=&quot;u9650_u5B9A_u9700_u6C42_u8D44_u6E90&quot;&gt;&lt;a href=&quot;#u9650_u5B9A_u9700_u6C42_u8D44_u6E90&quot; class=&quot;headerlink&quot; title=&quot;限定需求资源&quot;&gt;&lt;/a&gt;限定需求资源&lt;/h3&gt;&lt;p&gt;再看一个描述文件：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates:
-    mysql:
-      type: tosca.nodes.DBMS.MySQL
-      properties:
-        # 略
-      requirements:
-        - host:
-            &lt;b style=&quot;color:magenta&quot;&gt;node_filter&lt;/b&gt;:
-              capabilities:
-                - host:
-                    properties:
-                      - num_cpus: { &lt;b style=&quot;color:magenta&quot;&gt;in_range&lt;/b&gt;: [ 1, 4 ] }
-                      - mem_size: { &lt;b style=&quot;color:magenta&quot;&gt;greater_or_equal&lt;/b&gt;: 2 GB }
-                - os:
-                    properties:
-                      - architecture: { &lt;b style=&quot;color:magenta&quot;&gt;equal&lt;/b&gt;: x86_64 }
-                      - type: linux
-                      - distribution: ubuntu
-&lt;/pre&gt;
-
-&lt;p&gt;需要关注的是&lt;code&gt;node_filter&lt;/code&gt;。这里并没有指定mysql在哪个节点上启动，但是指定了一些节点信息，只有符合的节点才能够启动它。也可以抽出来做个模板：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates:
-    mysql:
-      type: tosca.nodes.DBMS.MySQL
-      properties:
-        # 略
-      requirements:
-        - host: &lt;b style=&quot;color:magenta&quot;&gt;mysql_compute&lt;/b&gt;
-
-    &lt;b style=&quot;color:magenta&quot;&gt;mysql_compute&lt;/b&gt;:
-      type: Compute
-      node_filter:
-        capabilities:
-          - host:
-              properties:
-                num_cpus: { equal: 2 }
-                mem_size: { greater_or_equal: 2 GB }
-          - os:
-              properties:
-                architecture: { equal: x86_64 }
-                type: linux
-                distribution: ubuntu
-&lt;/pre&gt;
-
-&lt;p&gt;数据库也可以使用：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates:
-    my_app:
-      type: my.types.MyApplication
-      properties:
-        admin_user: { get_input: admin_username }
-        admin_password: { get_input: admin_password }
-        db_endpoint_url: { get_property: [SELF, &lt;b style=&quot;color:magenta&quot;&gt;database_endpoint&lt;/b&gt;, url_path ] }         
-      requirements:
-        - &lt;b style=&quot;color:magenta&quot;&gt;database_endpoint&lt;/b&gt;:
-            node: my.types.nodes.MyDatabase
-            &lt;b style=&quot;color:magenta&quot;&gt;node_filter&lt;/b&gt;:
-              properties:
-                - db_version: { greater_or_equal: 5.5 }
-&lt;/pre&gt;
-
-&lt;p&gt;上面指定了数据库的版本。也可以抽出来做个模板：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates:
-    my_app:
-      type: my.types.MyApplication
-      properties:
-        admin_user: { get_input: admin_username }
-        admin_password: { get_input: admin_password }
-        db_endpoint_url: { get_property: [SELF, database_endpoint, url_path ] }         
-      requirements:
-        - database_endpoint: &lt;b style=&quot;color:magenta&quot;&gt;my_abstract_database&lt;/b&gt;
-    &lt;b style=&quot;color:magenta&quot;&gt;my_abstract_database&lt;/b&gt;:
-      type: my.types.nodes.MyDatabase
-      properties:
-        - db_version: { greater_or_equal: 5.5 }
-&lt;/pre&gt;
-
-&lt;h3 id=&quot;u8282_u70B9_u6A21_u677F_u66FF_u6362&quot;&gt;&lt;a href=&quot;#u8282_u70B9_u6A21_u677F_u66FF_u6362&quot; class=&quot;headerlink&quot; title=&quot;节点模板替换&quot;&gt;&lt;/a&gt;节点模板替换&lt;/h3&gt;&lt;p&gt;再看一个描述文件：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates:
-    web_app:
-      type: tosca.nodes.WebApplication.MyWebApp
-      requirements:
-        - host: web_server
-        - database_endpoint: &lt;b style=&quot;color:magenta&quot;&gt;db&lt;/b&gt;
-
-    web_server:
-      type: tosca.nodes.WebServer
-      requirements:
-        - host: server
-
-    server:
-      type: tosca.nodes.Compute
-      # 略
-
-    &lt;b style=&quot;color:magenta&quot;&gt;db&lt;/b&gt;:
-      # 这是一个抽象节点
-      type: tosca.nodes.Database
-      properties:
-        user: my_db_user
-        password: secret
-        name: my_db_name
-&lt;/pre&gt;
-
-&lt;p&gt;这里的&lt;code&gt;db&lt;/code&gt;是一个抽象节点，可以被下面的描述文件所替换：&lt;/p&gt;
-&lt;pre&gt;
-topology_template:
-  inputs:
-    db_user:
-      type: string
-    # 略
-  &lt;b style=&quot;color:magenta&quot;&gt;substitution_mappings:
-    node_type: tosca.nodes.Database
-    capabilities:
-      database_endpoint: [ database, database_endpoint ]&lt;/b&gt;
-  node_templates:
-    database:
-      type: tosca.nodes.Database
-      properties:
-        user: { get_input: db_user }
-        # 略
-      requirements:
-        - host: dbms
-    dbms:
-      type: tosca.nodes.DBMS
-      # 略
-    server:
-      type: tosca.nodes.Compute
-      # 略
-&lt;/pre&gt;
-
-&lt;p&gt;这里的&lt;code&gt;database_endpoint&lt;/code&gt;是由&lt;code&gt;database&lt;/code&gt;节点提供的&lt;code&gt;database_endpoint&lt;/code&gt;。两个文件联系起来看，表明了上面的&lt;code&gt;web_app&lt;/code&gt;不需要管&lt;code&gt;db&lt;/code&gt;是什么样子的，有什么拓扑结构，它关心的只是&lt;code&gt;database_endpoint&lt;/code&gt;。而下面由&lt;code&gt;database&lt;/code&gt;、&lt;code&gt;dbms&lt;/code&gt;和&lt;code&gt;server&lt;/code&gt;三个节点组成的模板正好可以提供&lt;code&gt;database_endpoint&lt;/code&gt;，从而替换掉&lt;code&gt;db&lt;/code&gt;这个抽象节点。另外，这样的替换也支持嵌套。&lt;/p&gt;
-&lt;h3 id=&quot;u8282_u70B9_u6A21_u677F_u7EC4&quot;&gt;&lt;a href=&quot;#u8282_u70B9_u6A21_u677F_u7EC4&quot; class=&quot;headerlink&quot; title=&quot;节点模板组&quot;&gt;&lt;/a&gt;节点模板组&lt;/h3&gt;&lt;p&gt;再看一个描述文件：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates:
-    apache:
-      type: tosca.nodes.WebServer.Apache
-      properties:
-        # 略
-      requirements:
-        - host: server
-    server:
-      type: tosca.nodes.Compute
-        # 略
-  &lt;b style=&quot;color:magenta&quot;&gt;groups&lt;/b&gt;:
-    &lt;b style=&quot;color:magenta&quot;&gt;webserver_group&lt;/b&gt;:
-      type: tosca.groups.Root
-      members: [ apache, server ]
-
-  &lt;b style=&quot;color:magenta&quot;&gt;policies&lt;/b&gt;:
-    - my_anti_collocation_policy:
-        type: my.policies.anticolocateion
-        targets: [ &lt;b style=&quot;color:magenta&quot;&gt;webserver_group&lt;/b&gt; ]
-        # 可以一起处理
-&lt;/pre&gt;
-
-&lt;p&gt;这个例子表明了&lt;code&gt;apache&lt;/code&gt;和&lt;code&gt;server&lt;/code&gt;应该是一组的关系。这样它们就可以一起被处理，比如说伸缩。&lt;/p&gt;
-&lt;h3 id=&quot;YAML_u5B8F&quot;&gt;&lt;a href=&quot;#YAML_u5B8F&quot; class=&quot;headerlink&quot; title=&quot;YAML宏&quot;&gt;&lt;/a&gt;YAML宏&lt;/h3&gt;&lt;p&gt;下面这个描述文件使用了宏来避免重复：&lt;/p&gt;
-&lt;pre&gt;
-&lt;b style=&quot;color:magenta&quot;&gt;dsl_definitions:
-  my_compute_node_props: &amp;my_compute_node_props&lt;/b&gt;
-    disk_size: 10 GB
-    num_cpus: 1
-    mem_size: 2 GB
-
-topology_template:
-  node_templates:
-    my_server:
-      type: Compute
-      capabilities:
-        - host:
-            properties: &lt;b style=&quot;color:magenta&quot;&gt;*my_compute_node_props&lt;/b&gt;
-
-    my_database:
-      type: Compute
-      capabilities:
-        - host:
-            properties: &lt;b style=&quot;color:magenta&quot;&gt;*my_compute_node_props&lt;/b&gt;
-&lt;/pre&gt;
-
-&lt;h3 id=&quot;u4F20_u53C2&quot;&gt;&lt;a href=&quot;#u4F20_u53C2&quot; class=&quot;headerlink&quot; title=&quot;传参&quot;&gt;&lt;/a&gt;传参&lt;/h3&gt;&lt;p&gt;先看一个描述文件：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates: 
-    wordpress:
-      type: tosca.nodes.WebApplication.WordPress
-      requirements:
-        - database_endpoint: mysql_database
-      interfaces:
-        Standard:
-          &lt;b style=&quot;color:magenta&quot;&gt;inputs&lt;/b&gt;:
-            wp_db_port: { get_property: [ SELF, database_endpoint, port ] }
-          configure:
-            implementation: wordpress_configure.sh           
-            &lt;b style=&quot;color:magenta&quot;&gt;inputs&lt;/b&gt;:
-              wp_db_port: { get_property: [ SELF, database_endpoint, port ] }
-&lt;/pre&gt;
-
-&lt;p&gt;这个例子有两个&lt;code&gt;inputs&lt;/code&gt;，前者指的是为所有操作都声明一个变量，后者指的是为&lt;code&gt;configure&lt;/code&gt;这个操作声明一个变量。再看下一个文件：&lt;/p&gt;
-&lt;pre&gt;
-  node_templates: 
-    frontend: 
-      type: MyTypes.SomeNodeType    
-      attributes: 
-        url: { &lt;b style=&quot;color:magenta&quot;&gt;get_operation_output&lt;/b&gt;: [ SELF, Standard, create, generated_url ] } 
-      interfaces: 
-        Standard: 
-          create: 
-            implementation: scripts/frontend/create.sh
-          configure: 
-            implementation: scripts/frontend/configure.sh 
-            inputs: 
-              data_dir: { &lt;b style=&quot;color:magenta&quot;&gt;get_operation_output&lt;/b&gt;: [ SELF, Standard, create, data_dir ] }
-&lt;/pre&gt;
-
-&lt;p&gt;在这个例子里有两个&lt;code&gt;get_operation_output&lt;/code&gt;，前者指的是将&lt;code&gt;create&lt;/code&gt;操作的环境变量&lt;code&gt;generated_url&lt;/code&gt;设置到&lt;code&gt;url&lt;/code&gt;里，后者是将&lt;code&gt;data_dir&lt;/code&gt;传递给&lt;code&gt;configure&lt;/code&gt;操作。&lt;/p&gt;
-&lt;h3 id=&quot;u53D6_u52A8_u6001_u503C&quot;&gt;&lt;a href=&quot;#u53D6_u52A8_u6001_u503C&quot; class=&quot;headerlink&quot; title=&quot;取动态值&quot;&gt;&lt;/a&gt;取动态值&lt;/h3&gt;&lt;p&gt;最后一个描述文件：&lt;/p&gt;
-&lt;pre&gt;
-node_types:
-  ServerNode:
-    derived_from: SoftwareComponent
-    properties:
-      &lt;b style=&quot;color:magenta&quot;&gt;notification_port&lt;/b&gt;:
-        type: integer
-    capabilities:
-      # 略
-  ClientNode:
-    derived_from: SoftwareComponent
-    properties:
-      # 略
-    requirements:
-      - server:
-          capability: Endpoint
-          node: ServerNode 
-          relationship: ConnectsTo
-topology_template:          
-  node_templates:
-    my_server:
-      type: ServerNode 
-      properties:
-        notification_port: 8000
-    my_client:
-      type: ClientNode
-      requirements:
-        - server:
-            node: my_server
-            relationship: &lt;b style=&quot;color:magenta&quot;&gt;my_connection&lt;/b&gt;
-  relationship_templates:
-    &lt;b style=&quot;color:magenta&quot;&gt;my_connection&lt;/b&gt;:
-      type: ConnectsTo
-      interfaces:
-        Configure:
-          inputs:
-            &lt;b style=&quot;color:magenta&quot;&gt;targ_notify_port: { get_attribute: [ TARGET, notification_port ] }&lt;/b&gt;
-            # 略
-&lt;/pre&gt;
-
-&lt;p&gt;这个例子里，类型为&lt;code&gt;ClientNode&lt;/code&gt;的&lt;code&gt;my_client&lt;/code&gt;在&lt;code&gt;my_connection&lt;/code&gt;关系的&lt;code&gt;Configure&lt;/code&gt;操作上需要&lt;code&gt;notification_port&lt;/code&gt;变量。这样的话，当类型为&lt;code&gt;ServerNode&lt;/code&gt;的&lt;code&gt;my_server&lt;/code&gt;连接过来时，就能取到它的&lt;code&gt;notification_port&lt;/code&gt;变量，并设置到&lt;code&gt;targ_notify_port&lt;/code&gt;环境变量里。有一点值得注意的是，真实的&lt;code&gt;notification_port&lt;/code&gt;可能是8000，也可能不是。所以在这种情况下，不用&lt;code&gt;get_property&lt;/code&gt;，而用&lt;code&gt;get_attribute&lt;/code&gt;函数。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;https://www.oasis-open.org/committees/tosca/&quot;&gt;TOSCA&lt;/a&gt;（Topology and Orchestration Specification for Cloud Applications）是由OASIS组织制定的云应用拓扑编排规范。通俗地说，就是制定了一个标准，用来描述云平台上应用的拓扑结构。目前支持XML和YAML，Cloudiy的蓝图就是基于这个规范而来。这个规范比较庞大，本文尽量浓缩了&lt;a href=&quot;http://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.0/TOSCA-Simple-Profile-YAML-v1.0.html&quot;&gt;TOSCA的YAML版&lt;/a&gt;前两章，以便用尽量少的时间了解尽量多的规范内容。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="devops" scheme="http://qinghua.github.io/categories/devops/"/>
-    
-    
-      <category term="cloudify" scheme="http://qinghua.github.io/tags/cloudify/"/>
-    
-      <category term="tosca" scheme="http://qinghua.github.io/tags/tosca/"/>
     
   </entry>
   

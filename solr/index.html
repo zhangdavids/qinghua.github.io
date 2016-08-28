@@ -13,19 +13,22 @@
     
 
     
-    <meta name="description" content="Apache Solr是用Java开发的基于Apache Lucene的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。">
+    <meta name="description" content="Apache Solr是用Java开发的基于Apache Lucene的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。
+对Elasticsearch入门有兴趣的朋友请参考用容器快速上手Elasticsearch。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用容器快速上手Apache Solr">
 <meta property="og:url" content="http://qinghua.github.io/solr/index.html">
 <meta property="og:site_name" content="懒程序员改变世界">
-<meta property="og:description" content="Apache Solr是用Java开发的基于Apache Lucene的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。">
+<meta property="og:description" content="Apache Solr是用Java开发的基于Apache Lucene的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。
+对Elasticsearch入门有兴趣的朋友请参考用容器快速上手Elasticsearch。">
 <meta property="og:image" content="http://qinghua.github.io/img/solr-dashboard.jpg">
 <meta property="og:image" content="http://qinghua.github.io/img/solr-query.jpg">
 <meta property="og:image" content="http://qinghua.github.io/img/solr-analysis.jpg">
-<meta property="og:updated_time" content="2016-08-15T02:23:09.000Z">
+<meta property="og:updated_time" content="2016-08-27T05:52:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用容器快速上手Apache Solr">
-<meta name="twitter:description" content="Apache Solr是用Java开发的基于Apache Lucene的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。">
+<meta name="twitter:description" content="Apache Solr是用Java开发的基于Apache Lucene的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。
+对Elasticsearch入门有兴趣的朋友请参考用容器快速上手Elasticsearch。">
 
     
     <link rel="alternative" href="/atom.xml" title="懒程序员改变世界" type="application/atom+xml">
@@ -117,7 +120,8 @@
 		
 		</div>
 		
-		<p><a href="http://lucene.apache.org/solr/" target="_blank" rel="external">Apache Solr</a>是用Java开发的基于<a href="https://lucene.apache.org/" target="_blank" rel="external">Apache Lucene</a>的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。<br><a id="more"></a></p>
+		<p><a href="http://lucene.apache.org/solr/" target="_blank" rel="external">Apache Solr</a>是用Java开发的基于<a href="https://lucene.apache.org/" target="_blank" rel="external">Apache Lucene</a>的高性能全文检索服务器，可以运行在web容器里，提供搜索引擎服务。本文旨在用docker来快速入门并尝试Solr提供的各种功能。</p>
+<p>对<a href="https://www.elastic.co/products/elasticsearch" target="_blank" rel="external">Elasticsearch</a>入门有兴趣的朋友请参考<a href="/elastic-search">用容器快速上手Elasticsearch</a>。<br><a id="more"></a></p>
 <h2 id="u542F_u52A8"><a href="#u542F_u52A8" class="headerlink" title="启动"></a>启动</h2><p>关于Solr的入门知识，有一本gitbook：<a href="https://www.gitbook.com/book/paynexu/create-your-vertical-search-engine-with-solr/details" target="_blank" rel="external">《用Solr构建垂直搜索引擎》</a>写得不错。本文关心的是实际操作，所以这就开始吧。通过docker，一条命令就可以直接启动Solr：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run <span class="operator">-d</span> -p <span class="number">8983</span>:<span class="number">8983</span> --name solr solr:<span class="number">6.1</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure></p>
 <p>我用的是mac，通过<code>docker-machine env default</code>命令可以看到默认的<code>default docker-machine</code>的IP地址是<code>192.168.99.100</code>，于是便可以通过<a href="http://192.168.99.100:8983/solr" target="_blank" rel="external">http://192.168.99.100:8983/solr</a>来访问Solr Admin了：<br><img src="/img/solr-dashboard.jpg" alt=""></p>
 <p>在Solr里，<a href="https://cwiki.apache.org/confluence/display/solr/Solr+Cores+and+solr.xml" target="_blank" rel="external">Core</a>可以认为是一个集合，一个Solr实例可以有多个Core。可以说Solr实例和Core的关系像是数据库实例和数据库的关系。现在我们来新建一个core，命名为ggg：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it --user=solr solr bin/solr create_core -c ggg</span><br></pre></td></tr></table></figure></p>
@@ -268,7 +272,7 @@
 		  
 		
 		  
-			<li><a href="/categories/devops/" title="devops">devops<sup>34</sup></a></li>
+			<li><a href="/categories/devops/" title="devops">devops<sup>35</sup></a></li>
 		  
 		
 		  

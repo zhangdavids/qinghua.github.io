@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qinghua.github.io/elastic-search/</loc>
+    
+    <lastmod>2016-08-28T13:06:21.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qinghua.github.io/solr/</loc>
+    
+    <lastmod>2016-08-27T05:52:18.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qinghua.github.io/intellij-idea-community-hotswap-webapp/</loc>
     
     <lastmod>2016-08-24T10:10:47.000Z</lastmod>
@@ -19,13 +33,6 @@
     <loc>http://qinghua.github.io/redis-cluster/</loc>
     
     <lastmod>2016-08-24T10:06:16.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qinghua.github.io/solr/</loc>
-    
-    <lastmod>2016-08-15T02:23:09.000Z</lastmod>
     
   </url>
   
