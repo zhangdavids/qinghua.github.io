@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qinghua.github.io/practical-devops/</loc>
+    
+    <lastmod>2016-09-21T04:44:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qinghua.github.io/alibaba_druid/</loc>
     
     <lastmod>2016-09-15T09:07:07.000Z</lastmod>
@@ -93,14 +100,14 @@
   </url>
   
   <url>
-    <loc>http://qinghua.github.io/waterfall-to-agile-2/</loc>
+    <loc>http://qinghua.github.io/waterfall-to-agile-1/</loc>
     
     <lastmod>2016-04-29T14:32:06.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://qinghua.github.io/waterfall-to-agile-1/</loc>
+    <loc>http://qinghua.github.io/waterfall-to-agile-2/</loc>
     
     <lastmod>2016-04-29T14:32:06.000Z</lastmod>
     
