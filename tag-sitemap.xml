@@ -219,34 +219,6 @@
     </url>
 
     <url>
-        <loc>http://qinghua.github.io/tags/thought/</loc>
-        <lastmod>2016-04-24T05:30:41.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://qinghua.github.io/tags/flannel/</loc>
-        <lastmod>2016-04-26T08:16:28.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://qinghua.github.io/tags/docker/</loc>
-        <lastmod>2016-04-29T14:04:17.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://qinghua.github.io/tags/kubernetes/</loc>
-        <lastmod>2016-04-29T14:04:17.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://qinghua.github.io/tags/agile/</loc>
         <lastmod>2016-04-29T14:32:06.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -254,15 +226,162 @@
     </url>
 
     <url>
-        <loc>http://qinghua.github.io/tags/IntelliJ-IDEA/</loc>
+        <loc>http://qinghua.github.io/tags/tomcat/</loc>
         <lastmod>2016-05-19T14:22:56.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://qinghua.github.io/tags/tomcat/</loc>
-        <lastmod>2016-05-19T14:22:56.000Z</lastmod>
+        <loc>http://qinghua.github.io/tags/NET/</loc>
+        <lastmod>2016-07-03T08:12:58.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/NET-Core/</loc>
+        <lastmod>2016-07-03T08:12:58.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/C/</loc>
+        <lastmod>2016-07-03T08:12:58.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/ASP-NET/</loc>
+        <lastmod>2016-07-03T08:12:58.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/flannel/</loc>
+        <lastmod>2016-07-09T08:42:59.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/docker/</loc>
+        <lastmod>2016-07-09T08:50:55.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/kubernetes/</loc>
+        <lastmod>2016-07-09T08:50:55.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/dubbox/</loc>
+        <lastmod>2016-07-29T01:14:39.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/rest/</loc>
+        <lastmod>2016-07-29T01:14:39.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/spring/</loc>
+        <lastmod>2016-08-24T10:07:26.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/scheduler/</loc>
+        <lastmod>2016-08-24T10:07:26.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/IntelliJ-IDEA/</loc>
+        <lastmod>2016-08-24T10:10:47.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/jetty/</loc>
+        <lastmod>2016-08-24T10:10:47.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/solr/</loc>
+        <lastmod>2016-08-27T05:52:18.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/elasticsearch/</loc>
+        <lastmod>2016-08-28T13:06:21.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/thought/</loc>
+        <lastmod>2016-08-31T06:18:16.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/redis/</loc>
+        <lastmod>2016-09-02T09:31:08.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/druid/</loc>
+        <lastmod>2016-09-15T09:07:07.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/book/</loc>
+        <lastmod>2016-09-21T04:44:58.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/dubbo/</loc>
+        <lastmod>2016-10-02T15:50:35.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/service-governance/</loc>
+        <lastmod>2016-10-02T15:50:35.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://qinghua.github.io/tags/monitor/</loc>
+        <lastmod>2016-10-02T15:50:35.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
